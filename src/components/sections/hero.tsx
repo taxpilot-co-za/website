@@ -32,12 +32,6 @@ export function Hero() {
               Start free review
               <ArrowRight className="size-4" />
             </Button>
-            <a
-              href="#how-it-works"
-              className="text-sm font-medium text-neutral-700 underline-offset-4 hover:underline"
-            >
-              See how it works
-            </a>
           </div>
 
           <div className="mt-8 flex items-start gap-2.5 text-sm text-neutral-700">
