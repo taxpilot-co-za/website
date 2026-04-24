@@ -10,9 +10,9 @@ export function Hero() {
         <div>
           <Badge
             variant="outline"
-            className="rounded-full border-black/10 bg-white/60 px-3 py-1 text-xs font-medium text-neutral-700"
+            className="bg-white/60 px-3 py-1 text-neutral-700"
           >
-            South African personal tax filing
+            No refund opportunity? No service fee.
           </Badge>
 
           <h1 className="mt-5 text-4xl font-semibold tracking-tight text-neutral-900 md:text-5xl lg:text-6xl">

@@ -1,11 +1,8 @@
-import { BrandMark } from "@/components/brand-mark";
-
 export function SiteFooter() {
   return (
     <footer className="border-t border-black/10">
       <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-8 text-sm text-neutral-600 md:flex-row md:items-center md:justify-between md:px-6">
         <div className="flex items-center gap-2">
-          <BrandMark className="size-5 rounded-[6px]" />
           <span className="font-semibold text-neutral-900">TaxPilot</span>
           <span className="hidden text-neutral-500 md:inline">
             · Help filing your SARS tax return
