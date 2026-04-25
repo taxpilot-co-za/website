@@ -12,7 +12,7 @@ export function SiteHeader() {
           TaxPilot
         </a>
         <Button size="sm" className="gap-1.5">
-          Start free review
+          Start Free Check
           <ArrowRight className="size-4" />
         </Button>
       </div>

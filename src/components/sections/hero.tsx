@@ -1,5 +1,5 @@
 import { ArrowRight, ShieldCheck } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+// import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -8,40 +8,33 @@ export function Hero() {
     <section className="mx-auto w-full max-w-6xl px-4 pb-10 pt-12 md:px-6 md:pb-14 md:pt-20">
       <div className="grid gap-10 lg:grid-cols-[1.05fr_1fr] lg:items-center lg:gap-16">
         <div>
-          <Badge
+          {/* <Badge
             variant="outline"
             className="bg-white/60 px-3 py-1 text-neutral-700"
           >
-            No refund opportunity? No service fee.
-          </Badge>
+            Completely Free!
+          </Badge> */}
 
           <h1 className="mt-5 text-4xl font-semibold tracking-tight text-neutral-900 md:text-5xl lg:text-6xl">
-            Need help filing your tax return?
+            Check if SARS owes you a refund — for free
           </h1>
 
           <p className="mt-5 max-w-xl text-base leading-relaxed text-neutral-600 md:text-lg">
-            Start with a free tax review. We only charge if we help you get a
-            refund — and nothing is filed without your approval.
+            Answer a few quick questions to see whether your tax return or
+            auto-assessment may be worth reviewing. You’ll get a free indication
+            of your refund potential, with no obligation to take the next step.
           </p>
 
           <div className="mt-8 flex flex-col items-start gap-3 sm:flex-row sm:items-center">
-            <Button
-              size="lg"
-              className="gap-1.5 focus-visible:ring-brand/40"
-            >
-              Start free review
+            <Button size="lg" className="gap-1.5 focus-visible:ring-brand/40">
+              Start Free Check
               <ArrowRight className="size-4" />
             </Button>
           </div>
 
           <div className="mt-8 flex items-start gap-2.5 text-sm text-neutral-700">
             <ShieldCheck className="mt-0.5 size-4 shrink-0 text-brand" />
-            <span>
-              <span className="font-medium text-neutral-900">
-                No refund opportunity? No service fee.
-              </span>{" "}
-              If we can't help you secure a refund, you don't pay us.
-            </span>
+            <span>Completely free check. No obligation.</span>
           </div>
         </div>
 
@@ -66,32 +59,33 @@ function TestimonialCard() {
               Lerato M.
             </div>
             <div className="text-xs text-neutral-500">
-              Auto Assessment · Cape Town
+              Salaried Employee · Cape Town
             </div>
           </div>
         </div>
 
         <p className="text-[15px] leading-relaxed text-neutral-800">
-          “My Auto Assessment said I owed SARS over R3,000. I almost just paid
-          it. TaxPilot reviewed my return and I ended up with a refund of
-          R8,740 instead.”
+          “I wasn’t sure if I qualified for anything, so the free check made it
+          simple. In a few minutes, I could see that my tax return may be worth
+          reviewing for a possible refund. No confusing tax jargon, no upfront
+          cost, and no pressure.”
         </p>
 
         <div className="grid grid-cols-2 overflow-hidden rounded-lg border border-brand/15 bg-brand-soft text-center">
           <div className="p-3">
             <div className="text-[11px] font-medium uppercase tracking-wide text-neutral-500">
-              Auto Assessment
+              Refund Identified
             </div>
             <div className="mt-1 text-sm font-semibold text-neutral-700">
-              Owed R3,000+
+              R6,100+
             </div>
           </div>
           <div className="border-l border-brand/15 p-3">
             <div className="text-[11px] font-medium uppercase tracking-wide text-brand">
-              After review
+              Paid Upfront
             </div>
             <div className="mt-1 text-sm font-semibold text-neutral-900">
-              Refund R8,740
+              R0
             </div>
           </div>
         </div>

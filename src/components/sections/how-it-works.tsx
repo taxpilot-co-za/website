@@ -1,19 +1,19 @@
 const steps = [
   {
-    title: "Complete the free tax review",
-    body: "Answer a short form about your income and situation. Takes a few minutes.",
+    title: "Complete the free check",
+    body: "Answer a few quick questions about your SARS return, income, and possible deductions.",
   },
   {
-    title: "We analyse your information",
-    body: "A registered practitioner reviews your return and refund likelihood.",
+    title: "We review your answers",
+    body: "Your information is checked for signs that your tax return or auto-assessment may be worth a closer look.",
   },
   {
-    title: "We share feedback",
-    body: "You'll see exactly where you stand — and your filing plan if there's a refund.",
+    title: "See if there’s refund potential",
+    body: "You’ll get a clear indication of whether your situation may qualify for a possible SARS refund.",
   },
   {
-    title: "With your approval, we file",
-    body: "Nothing is submitted to SARS until you confirm. We handle the rest.",
+    title: "Choose your next step",
+    body: "If your case looks promising, you can decide whether you’d like help from a registered tax consultant — with no obligation to continue.",
   },
 ];
 
@@ -25,11 +25,11 @@ export function HowItWorks() {
     >
       <div className="max-w-2xl">
         <h2 className="text-3xl font-semibold tracking-tight text-neutral-900 md:text-4xl">
-          How it works
+          How your free check works
         </h2>
         <p className="mt-3 text-base text-neutral-600">
-          Simple, low-risk, done-for-you. Especially suited to salaried
-          employees, first-time filers, and anyone placed on Auto Assessment.
+          A simple 4-step process to help you understand whether your SARS
+          return may be worth reviewing — before you decide what to do next.
         </p>
       </div>
 
@@ -53,8 +53,8 @@ export function HowItWorks() {
         <span className="font-medium text-neutral-900">
           No refund opportunity? No service fee.
         </span>{" "}
-        If we can't get you a refund, you don't owe us anything — and we still
-        file your return for free.
+        If the review does not identify a refund opportunity, you can stop there
+        or choose paid filing support.
       </p>
     </section>
   );

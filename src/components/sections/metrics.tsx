@@ -1,7 +1,7 @@
 const items = [
-  { value: "126+", label: "People helped" },
-  { value: "R844,200", label: "Total refunds secured" },
-  { value: "87%", label: "Refund success rate" },
+  { value: "630+", label: "Taxpayers screened" },
+  { value: "R844k+", label: "Refunds identified" },
+  { value: "87%", label: "Eligible for refunds" },
 ];
 
 export function Metrics() {
