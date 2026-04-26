@@ -2,6 +2,27 @@
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
+## Analytics and lead form configuration
+
+Set these Vite environment variables before deploying:
+
+```sh
+VITE_GA_MEASUREMENT_ID=G-XXXXXXXXXX
+VITE_LEAD_FORM_URL=https://example.com/your-lead-form
+```
+
+The lead form should redirect completed submissions back to the home page with:
+
+```txt
+/?success=true
+```
+
+The site tracks the funnel as:
+
+- GA4 page views for ad/campaign visits.
+- `cta_click` when a visitor clicks a Start Free Check CTA.
+- `generate_lead` when the visitor returns with `success=true`.
+
 Currently, two official plugins are available:
 
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)

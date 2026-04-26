@@ -2,6 +2,7 @@ import { ArrowRight, ShieldCheck } from "lucide-react";
 // import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { leadFormUrl, trackCtaClick } from "@/lib/analytics";
 
 export function Hero() {
   return (
@@ -26,9 +27,15 @@ export function Hero() {
           </p>
 
           <div className="mt-8 flex flex-col items-start gap-3 sm:flex-row sm:items-center">
-            <Button size="lg" className="gap-1.5 focus-visible:ring-brand/40">
-              Start Free Check
-              <ArrowRight className="size-4" />
+            <Button
+              size="lg"
+              className="gap-1.5 focus-visible:ring-brand/40"
+              asChild
+            >
+              <a href={leadFormUrl} onClick={() => trackCtaClick("hero")}>
+                Start Free Check
+                <ArrowRight className="size-4" />
+              </a>
             </Button>
           </div>
 

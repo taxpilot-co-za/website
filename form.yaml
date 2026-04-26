@@ -1,0 +1,407 @@
+version: 1
+title: "SARS Refund Check"
+description: "Answer a few questions so we can check whether there may be a SARS refund opportunity."
+
+sections:
+  - id: start_refund_check
+    title: "Start your refund check"
+    fields:
+      - id: full_name
+        type: short_text
+        label: "Full name"
+        placeholder: "Jane Smith"
+        validators:
+          - required
+
+      - id: mobile_number
+        type: mobile_number
+        label: "Cellphone number / WhatsApp number"
+        placeholder: "+27 82 123 4567"
+        validators:
+          - required
+          - type: pattern
+            regex: "^\\+[0-9 ]+$"
+            message: "Start with + and use digits or spaces only."
+          - type: min_length
+            value: 8
+            message: "Enter at least 8 characters."
+          - type: max_length
+            value: 20
+            message: "Enter no more than 20 characters."
+
+      - id: email
+        type: email
+        label: "Email address"
+        placeholder: "jane@example.com"
+        validators:
+          - required
+
+      - id: preferred_contact_method
+        type: single_select
+        label: "Preferred contact method"
+        options:
+          - label: "WhatsApp"
+            value: "whatsapp"
+          - label: "Phone call"
+            value: "phone_call"
+          - label: "Email"
+            value: "email"
+        validators:
+          - required
+
+      - id: tax_year
+        type: dropdown
+        label: "Which tax year should we check?"
+        options:
+          - label: "2026: 1 Mar 2025 - 28 Feb 2026"
+            value: "2026"
+          - label: "2025: 1 Mar 2024 - 28 Feb 2025"
+            value: "2025"
+          - label: "2024 or earlier"
+            value: "2024_or_earlier"
+          - label: "Not sure"
+            value: "not_sure"
+        validators:
+          - required
+
+      - id: date_of_birth
+        type: date
+        label: "Date of birth"
+        validators:
+          - required
+
+      - id: contact_consent
+        type: multiple_select
+        label: "Contact consent"
+        options:
+          - label: "I agree that you may contact me about my SARS refund check, even if I do not complete the full form."
+            value: "agreed"
+        validators:
+          - required
+          - type: min
+            value: 1
+            message: "Confirm that we may contact you."
+          - type: max
+            value: 1
+            message: "Select only this consent option."
+
+    next: quick_eligibility
+
+  - id: quick_eligibility
+    title: "Quick eligibility check"
+    fields:
+      - id: paye_deducted
+        type: single_select
+        label: "During that tax year, were you employed and did your employer deduct PAYE/tax from your salary?"
+        options:
+          - label: "Yes"
+            value: "yes"
+          - label: "No"
+            value: "no"
+          - label: "Not sure"
+            value: "not_sure"
+        validators:
+          - required
+
+      - id: work_situation
+        type: single_select
+        label: "Which best describes your work situation during the tax year?"
+        options:
+          - label: "I worked the full tax year for one employer"
+            value: "full_year_one_employer"
+          - label: "I changed jobs during the year"
+            value: "changed_jobs"
+          - label: "I was unemployed, unpaid, or on reduced pay for part of the year"
+            value: "unemployed_unpaid_reduced_pay"
+          - label: "I had more than one employer at the same time"
+            value: "multiple_employers_same_time"
+          - label: "I was mainly self-employed, freelance, or running a business"
+            value: "self_employed_freelance_business"
+          - label: "I only received pension/retirement income"
+            value: "pension_only"
+          - label: "Not sure"
+            value: "not_sure"
+        validators:
+          - required
+
+    next:
+      - when: "data.paye_deducted === 'no'"
+        go: "low_priority_exit"
+      - when: "data.work_situation === 'self_employed_freelance_business'"
+        go: "low_priority_exit"
+      - when: "data.work_situation === 'pension_only'"
+        go: "low_priority_exit"
+      - else: "retirement_annuity"
+
+  - id: low_priority_exit
+    title: "Possible review"
+    fields:
+      - id: low_priority_next_step
+        type: single_select
+        label: "Based on your answers, your case may not fit our standard commission-based refund check. We mainly help salaried employees where PAYE was deducted and where there may be missed retirement, medical aid, or employment-period refund opportunities. What would you like to do?"
+        options:
+          - label: "Submit my details for a possible review"
+            value: "submit_for_possible_review"
+          - label: "Exit form"
+            value: "exit_form"
+        validators:
+          - required
+
+    next: done
+
+  - id: retirement_annuity
+    title: "Retirement annuity check"
+    fields:
+      - id: paid_own_retirement_annuity
+        type: single_select
+        label: "Did you pay into a retirement annuity from your own bank account?"
+        options:
+          - label: "Yes"
+            value: "yes"
+          - label: "No"
+            value: "no"
+          - label: "Not sure"
+            value: "not_sure"
+        validators:
+          - required
+
+      - id: retirement_annuity_certificate
+        type: single_select
+        label: "Do you have, or can you get, your retirement annuity tax certificate?"
+        visible_when: "data.paid_own_retirement_annuity === 'yes' || data.paid_own_retirement_annuity === 'not_sure'"
+        options:
+          - label: "Yes"
+            value: "yes"
+          - label: "I can get it"
+            value: "can_get_it"
+          - label: "No"
+            value: "no"
+          - label: "Not sure"
+            value: "not_sure"
+        validators:
+          - required
+
+      - id: retirement_annuity_contribution
+        type: single_select
+        label: "Roughly how much did you contribute?"
+        visible_when: "data.paid_own_retirement_annuity === 'yes'"
+        options:
+          - label: "Less than R500 per month"
+            value: "less_than_500_per_month"
+          - label: "R500 - R1,500 per month"
+            value: "500_to_1500_per_month"
+          - label: "More than R1,500 per month"
+            value: "more_than_1500_per_month"
+          - label: "Not sure"
+            value: "not_sure"
+        validators:
+          - required
+
+    next: medical_aid
+
+  - id: medical_aid
+    title: "Medical aid check"
+    fields:
+      - id: medical_aid_status
+        type: single_select
+        label: "Were you on medical aid during the tax year?"
+        options:
+          - label: "Yes, I paid it myself"
+            value: "paid_myself"
+          - label: "Yes, it was deducted through my employer"
+            value: "deducted_through_employer"
+          - label: "Yes, someone else paid it for me"
+            value: "someone_else_paid"
+          - label: "No"
+            value: "no"
+          - label: "Not sure"
+            value: "not_sure"
+        validators:
+          - required
+
+      - id: medical_aid_certificate
+        type: single_select
+        label: "Do you have, or can you get, your medical aid tax certificate?"
+        visible_when: "data.medical_aid_status !== 'no'"
+        options:
+          - label: "Yes"
+            value: "yes"
+          - label: "I can get it"
+            value: "can_get_it"
+          - label: "No"
+            value: "no"
+          - label: "Not sure"
+            value: "not_sure"
+        validators:
+          - required
+
+      - id: medical_aid_people_covered
+        type: single_select
+        label: "How many people were covered on the medical aid, including yourself?"
+        visible_when: "data.medical_aid_status !== 'no'"
+        options:
+          - label: "1"
+            value: "1"
+          - label: "2"
+            value: "2"
+          - label: "3 or more"
+            value: "3_or_more"
+          - label: "Not sure"
+            value: "not_sure"
+        validators:
+          - required
+
+    next: large_unpaid_medical_bills
+
+  - id: large_unpaid_medical_bills
+    title: "Large unpaid medical bills"
+    fields:
+      - id: large_medical_bills
+        type: single_select
+        label: "Did you personally pay medical bills of more than R10,000 that medical aid did not pay back?"
+        options:
+          - label: "Yes"
+            value: "yes"
+          - label: "No"
+            value: "no"
+          - label: "Not sure"
+            value: "not_sure"
+        validators:
+          - required
+
+      - id: medical_expense_proof
+        type: single_select
+        label: "Do you have proof of those medical expenses?"
+        visible_when: "data.large_medical_bills === 'yes'"
+        options:
+          - label: "Yes"
+            value: "yes"
+          - label: "I can get it"
+            value: "can_get_it"
+          - label: "No"
+            value: "no"
+          - label: "Not sure"
+            value: "not_sure"
+        validators:
+          - required
+
+    next: sars_status
+
+  - id: sars_status
+    title: "SARS status"
+    fields:
+      - id: sars_tax_year_status
+        type: single_select
+        label: "What happened with SARS for this tax year?"
+        options:
+          - label: "I have not submitted yet"
+            value: "not_submitted_yet"
+          - label: "SARS auto-assessed me"
+            value: "auto_assessed"
+          - label: "I submitted, but I think something was missed"
+            value: "submitted_something_missed"
+          - label: "SARS says I owe money"
+            value: "sars_says_i_owe_money"
+          - label: "SARS already paid me a refund"
+            value: "already_paid_refund"
+          - label: "Not sure"
+            value: "not_sure"
+        validators:
+          - required
+
+    next: document_readiness
+
+  - id: document_readiness
+    title: "Document readiness"
+    fields:
+      - id: available_documents
+        type: multiple_select
+        label: "Which documents can you upload or send us?"
+        options:
+          - label: "IRP5 / salary tax certificate"
+            value: "irp5_salary_tax_certificate"
+          - label: "SARS assessment or auto-assessment"
+            value: "sars_assessment_or_auto_assessment"
+          - label: "Retirement annuity tax certificate"
+            value: "retirement_annuity_tax_certificate"
+          - label: "Medical aid tax certificate"
+            value: "medical_aid_tax_certificate"
+          - label: "Proof of large medical expenses"
+            value: "proof_of_large_medical_expenses"
+          - label: "I do not have documents yet"
+            value: "no_documents_yet"
+        validators:
+          - required
+          - type: min
+            value: 1
+            message: "Select at least one option."
+
+      - id: document_upload_preference
+        type: single_select
+        label: "Upload documents now, or we can send you a secure upload link later."
+        visible_when: "(data.available_documents || []).length > 0"
+        options:
+          - label: "Upload now"
+            value: "upload_now"
+          - label: "Send me a link"
+            value: "send_me_a_link"
+          - label: "I will get the documents first"
+            value: "will_get_documents_first"
+        validators:
+          - required
+
+      - id: uploaded_documents
+        type: file_upload
+        label: "Upload documents now"
+        placeholder: "Upload one or more PDF or image files"
+        visible_when: "data.document_upload_preference === 'upload_now'"
+        accepted_mime_types:
+          - application/pdf
+          - image/png
+          - image/jpeg
+          - image/webp
+        validators:
+          - type: max
+            value: 10
+            message: "Upload no more than 10 files."
+
+    next: final_confirmation
+
+  - id: final_confirmation
+    title: "Final confirmation"
+    fields:
+      - id: confirm_accuracy
+        type: multiple_select
+        label: "Confirm accuracy"
+        options:
+          - label: "I confirm that the information I provided is accurate to the best of my knowledge."
+            value: "confirmed"
+        validators:
+          - required
+          - type: min
+            value: 1
+            message: "Confirm that the information is accurate."
+          - type: max
+            value: 1
+            message: "Select only this confirmation option."
+
+      - id: refund_disclaimer
+        type: multiple_select
+        label: "Refund disclaimer"
+        options:
+          - label: "I understand that a SARS refund is not guaranteed and depends on my SARS assessment, tax paid, and supporting documents."
+            value: "understood"
+        validators:
+          - required
+          - type: min
+            value: 1
+            message: "Confirm that you understand the refund disclaimer."
+          - type: max
+            value: 1
+            message: "Select only this disclaimer option."
+
+    next: done
+
+completion:
+  title: "Refund check submitted"
+  message: "Thank you. We have received your SARS refund check details and will review your refund potential."

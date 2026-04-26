@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { leadFormUrl, trackCtaClick } from "@/lib/analytics";
 import { ArrowRight } from "lucide-react";
 
 export function SiteHeader() {
@@ -11,9 +12,11 @@ export function SiteHeader() {
         >
           TaxPilot
         </a>
-        <Button size="sm" className="gap-1.5">
-          Start Free Check
-          <ArrowRight className="size-4" />
+        <Button size="sm" className="gap-1.5" asChild>
+          <a href={leadFormUrl} onClick={() => trackCtaClick("header")}>
+            Start Free Check
+            <ArrowRight className="size-4" />
+          </a>
         </Button>
       </div>
     </header>
