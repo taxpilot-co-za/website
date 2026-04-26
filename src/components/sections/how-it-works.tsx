@@ -49,13 +49,13 @@ export function HowItWorks() {
         ))}
       </ol>
 
-      <p className="mt-10 text-sm text-neutral-600">
+      {/* <p className="mt-10 text-sm text-neutral-600">
         <span className="font-medium text-neutral-900">
           No refund opportunity? No service fee.
         </span>{" "}
         If the review does not identify a refund opportunity, you can stop there
         or choose paid filing support.
-      </p>
+      </p> */}
     </section>
   );
 }

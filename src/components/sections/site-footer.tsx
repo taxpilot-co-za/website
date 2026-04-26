@@ -5,7 +5,7 @@ export function SiteFooter() {
         <div className="flex items-center gap-2">
           <span className="font-semibold text-neutral-900">TaxPilot</span>
           <span className="hidden text-neutral-500 md:inline">
-            · Personal SARS tax filing support
+            · Completely free. No obligation.
           </span>
         </div>
         <nav className="flex items-center gap-5">

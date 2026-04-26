@@ -34,7 +34,7 @@ export function Hero() {
 
           <div className="mt-8 flex items-start gap-2.5 text-sm text-neutral-700">
             <ShieldCheck className="mt-0.5 size-4 shrink-0 text-brand" />
-            <span>Completely free check. No obligation.</span>
+            <span>Completely free. No obligation.</span>
           </div>
         </div>
 
