@@ -1,9 +1,16 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Hero } from "@/components/sections/hero";
 import { HowItWorks } from "@/components/sections/how-it-works";
 import { Metrics } from "@/components/sections/metrics";
 import { SiteFooter } from "@/components/sections/site-footer";
 import { SiteHeader } from "@/components/sections/site-header";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { trackLead } from "@/lib/analytics";
 
 let hasTrackedLeadSuccess = false;
@@ -11,6 +18,8 @@ let hasTrackedLeadSuccess = false;
 function App() {
   const hasLeadSuccess =
     new URLSearchParams(window.location.search).get("success") === "true";
+  const [isSuccessDialogOpen, setIsSuccessDialogOpen] =
+    useState(hasLeadSuccess);
 
   useEffect(() => {
     if (!hasLeadSuccess) {
@@ -29,7 +38,10 @@ function App() {
     <div className="flex min-h-screen flex-col bg-[#f7f5ef] text-neutral-900">
       <SiteHeader />
       <main className="flex-1">
-        {hasLeadSuccess ? <LeadSuccessMessage /> : null}
+        <LeadSuccessDialog
+          open={isSuccessDialogOpen}
+          onOpenChange={setIsSuccessDialogOpen}
+        />
         <Hero />
         <Metrics />
         <HowItWorks />
@@ -39,14 +51,26 @@ function App() {
   );
 }
 
-function LeadSuccessMessage() {
+function LeadSuccessDialog({
+  open,
+  onOpenChange,
+}: {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}) {
   return (
-    <section className="mx-auto w-full max-w-6xl px-4 pt-6 md:px-6">
-      <div className="rounded-lg border border-brand/20 bg-white px-4 py-3 text-sm text-neutral-700 shadow-[0_1px_2px_rgba(17,17,17,0.04)]">
-        <span className="font-medium text-neutral-900">Thank you.</span> Your
-        free check has been submitted successfully.
-      </div>
-    </section>
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Your refund check looks promising</DialogTitle>
+          <DialogDescription>
+            Your case is worth being reviewed by a tax professional. We’ll put
+            you in touch with one, and you’ll be contacted within the next 2
+            business days.
+          </DialogDescription>
+        </DialogHeader>
+      </DialogContent>
+    </Dialog>
   );
 }
 

@@ -3,27 +3,27 @@ title: "Check if SARS owes you a refund - for free"
 description: "Answer a few quick questions to see whether your tax return or auto-assessment may be worth reviewing. You’ll get a free indication of your refund potential, with no obligation to take the next step."
 
 sections:
-  - id: contact_details
-    title: "Your details"
+  - id: section_1
+    title: "Section 1"
     fields:
       - id: full_name
         type: short_text
         label: "Your full name"
-        placeholder: "Jane Smith"
+        placeholder: "e.g. James Wilson"
         validators:
           - required
 
-      - id: cellphone_whatsapp
+      - id: mobile_number
         type: mobile_number
-        label: "Best cellphone or WhatsApp number"
+        label: "Mobile number"
         placeholder: "+27 82 123 4567"
         validators:
           - required
 
-      - id: email
+      - id: email_address
         type: email
         label: "Email address"
-        placeholder: "jane@example.com"
+        placeholder: "e.g. jameswilson@example.com"
         validators:
           - required
 
@@ -40,10 +40,10 @@ sections:
         validators:
           - required
 
-    next: basic_eligibility
+    next: section_2
 
-  - id: basic_eligibility
-    title: "Income and PAYE"
+  - id: setion_2
+    title: "Section 2"
     fields:
       - id: paye_deducted
         type: single_select
@@ -58,7 +58,7 @@ sections:
         validators:
           - required
 
-      - id: salary_band
+      - id: salary
         type: single_select
         label: "What is your approximate gross monthly salary before tax?"
         options:
@@ -96,10 +96,10 @@ sections:
         validators:
           - required
 
-    next: refund_triggers
+    next: section_3
 
-  - id: refund_triggers
-    title: "Possible refund factors"
+  - id: section_3
+    title: "Section 3"
     fields:
       - id: paid_own_retirement_annuity
         type: single_select
@@ -129,12 +129,12 @@ sections:
         validators:
           - required
 
-    next: sars_status
+    next: section_4
 
-  - id: sars_status
-    title: "Your SARS status"
+  - id: section_4
+    title: "Section 4"
     fields:
-      - id: sars_tax_year_status
+      - id: tax_year_status
         type: single_select
         label: "What is your SARS status for this tax year?"
         options:
@@ -153,10 +153,10 @@ sections:
         validators:
           - required
 
-    next: document_readiness
+    next: section_5
 
-  - id: document_readiness
-    title: "Documents you have"
+  - id: section_5
+    title: "Section 5"
     fields:
       - id: available_documents
         type: multiple_select
@@ -179,7 +179,7 @@ sections:
             message: "Please select at least one option."
 
     next:
-      - when: "data.paye_deducted === 'yes' && !['self_employed_freelance_business', 'multiple_employers_same_time'].includes(data.work_situation) && data.sars_tax_year_status !== 'refund_paid' && (['changed_jobs', 'unemployed_unpaid_reduced_pay'].includes(data.work_situation) || data.paid_own_retirement_annuity === 'yes' || data.paid_own_medical_aid === 'yes')"
+      - when: "data.paye_deducted === 'yes' && !['self_employed_freelance_business', 'multiple_employers_same_time'].includes(data.work_situation) && data.tax_year_status !== 'refund_paid' && (['changed_jobs', 'unemployed_unpaid_reduced_pay'].includes(data.work_situation) || data.paid_own_retirement_annuity === 'yes' || data.paid_own_medical_aid === 'yes')"
         go: "https://taxpilot.co.za/?success=true"
       - else: "done"
 
@@ -190,6 +190,6 @@ completion:
 connections:
   - type: email
     to: "hirebarend@gmail.com"
-    subject: "SARS refund potential check from {{data.full_name}}"
-    body: "Reply to {{data.email}} or {{data.cellphone_whatsapp}}."
+    subject: "Taxpilot Response from {{data.full_name}}"
+    body: "Reply to {{data.email_address}} or {{data.mobile_number}}."
     include_responses: true
