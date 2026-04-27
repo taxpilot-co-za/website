@@ -4,18 +4,18 @@ description: "Answer a few quick questions to see whether your tax return or aut
 
 sections:
   - id: contact_details
-    title: "Contact details"
+    title: "Your details"
     fields:
       - id: full_name
         type: short_text
-        label: "Full name"
+        label: "Your full name"
         placeholder: "Jane Smith"
         validators:
           - required
 
       - id: cellphone_whatsapp
         type: mobile_number
-        label: "Cellphone / WhatsApp number"
+        label: "Best cellphone or WhatsApp number"
         placeholder: "+27 82 123 4567"
         validators:
           - required
@@ -29,13 +29,13 @@ sections:
 
       - id: tax_year
         type: single_select
-        label: "Which tax year should we check?"
+        label: "Which tax year would you like us to check?"
         options:
-          - label: "2026: 1 Mar 2025 - 28 Feb 2026"
+          - label: "2026 tax year (1 Mar 2025 - 28 Feb 2026)"
             value: "2026"
-          - label: "2025: 1 Mar 2024 - 28 Feb 2025"
+          - label: "2025 tax year (1 Mar 2024 - 28 Feb 2025)"
             value: "2025"
-          - label: "Not sure"
+          - label: "I am not sure"
             value: "not_sure"
         validators:
           - required
@@ -43,36 +43,55 @@ sections:
     next: basic_eligibility
 
   - id: basic_eligibility
-    title: "Basic eligibility"
+    title: "Income and PAYE"
     fields:
       - id: paye_deducted
         type: single_select
-        label: "Were you employed and was PAYE/tax deducted from your salary?"
+        label: "Did an employer deduct PAYE or tax from your salary?"
         options:
           - label: "Yes"
             value: "yes"
           - label: "No"
             value: "no"
-          - label: "Not sure"
+          - label: "I am not sure"
+            value: "not_sure"
+        validators:
+          - required
+
+      - id: salary_band
+        type: single_select
+        label: "What is your approximate gross monthly salary before tax?"
+        options:
+          - label: "Less than R20,000 per month"
+            value: "under_20000"
+          - label: "R20,000 - R39,999 per month"
+            value: "20000_39999"
+          - label: "R40,000 - R59,999 per month"
+            value: "40000_59999"
+          - label: "R60,000 - R79,999 per month"
+            value: "60000_79999"
+          - label: "R80,000 or more per month"
+            value: "80000_plus"
+          - label: "I am not sure"
             value: "not_sure"
         validators:
           - required
 
       - id: work_situation
         type: single_select
-        label: "Which best describes your work situation during the tax year?"
+        label: "Which best describes your work situation for that tax year?"
         options:
-          - label: "I worked the full year for one employer"
+          - label: "I worked for one employer for the full year"
             value: "full_year_one_employer"
           - label: "I changed jobs during the year"
             value: "changed_jobs"
-          - label: "I was unemployed, unpaid, or on reduced pay for part of the year"
+          - label: "I had a period with no pay or reduced pay"
             value: "unemployed_unpaid_reduced_pay"
           - label: "I had more than one employer at the same time"
             value: "multiple_employers_same_time"
-          - label: "I was self-employed, freelance, or running a business"
+          - label: "I was self-employed, freelancing, or running a business"
             value: "self_employed_freelance_business"
-          - label: "Not sure"
+          - label: "I am not sure"
             value: "not_sure"
         validators:
           - required
@@ -80,32 +99,32 @@ sections:
     next: refund_triggers
 
   - id: refund_triggers
-    title: "Refund triggers"
+    title: "Possible refund factors"
     fields:
       - id: paid_own_retirement_annuity
         type: single_select
-        label: "Did you pay into a retirement annuity from your own bank account?"
+        label: "Did you personally pay into a retirement annuity?"
         options:
           - label: "Yes"
             value: "yes"
           - label: "No"
             value: "no"
-          - label: "Not sure"
+          - label: "I am not sure"
             value: "not_sure"
         validators:
           - required
 
       - id: paid_own_medical_aid
         type: single_select
-        label: "Were you on medical aid that you paid yourself?"
+        label: "Did you pay for medical aid yourself?"
         options:
           - label: "Yes"
             value: "yes"
-          - label: "No, it was deducted through my employer"
+          - label: "No, it was paid through my employer"
             value: "deducted_through_employer"
-          - label: "No medical aid"
+          - label: "I did not have medical aid"
             value: "no_medical_aid"
-          - label: "Not sure"
+          - label: "I am not sure"
             value: "not_sure"
         validators:
           - required
@@ -113,23 +132,23 @@ sections:
     next: sars_status
 
   - id: sars_status
-    title: "SARS status"
+    title: "Your SARS status"
     fields:
       - id: sars_tax_year_status
         type: single_select
-        label: "What has happened with SARS for this tax year?"
+        label: "What is your SARS status for this tax year?"
         options:
-          - label: "I have not submitted yet"
+          - label: "I have not submitted my return yet"
             value: "not_submitted"
-          - label: "SARS auto-assessed me"
+          - label: "SARS issued an auto-assessment"
             value: "auto_assessed"
-          - label: "I submitted, but I think something was missed"
+          - label: "I submitted, but I think something may have been missed"
             value: "submitted_something_missed"
           - label: "SARS says I owe money"
             value: "owe_money"
-          - label: "SARS already paid me a refund"
+          - label: "SARS has already paid me a refund"
             value: "refund_paid"
-          - label: "Not sure"
+          - label: "I am not sure"
             value: "not_sure"
         validators:
           - required
@@ -137,27 +156,27 @@ sections:
     next: document_readiness
 
   - id: document_readiness
-    title: "Document readiness"
+    title: "Documents you have"
     fields:
       - id: available_documents
         type: multiple_select
-        label: "Which documents do you already have?"
+        label: "Which tax documents do you already have?"
         options:
-          - label: "IRP5 / salary tax certificate"
+          - label: "IRP5 or salary tax certificate"
             value: "irp5"
-          - label: "SARS assessment or auto-assessment"
+          - label: "SARS assessment or auto-assessment notice"
             value: "sars_assessment"
           - label: "Retirement annuity tax certificate"
             value: "retirement_annuity_certificate"
           - label: "Medical aid tax certificate"
             value: "medical_aid_certificate"
-          - label: "I do not have documents yet"
+          - label: "I do not have my documents yet"
             value: "no_documents_yet"
         validators:
           - required
           - type: min
             value: 1
-            message: "Select at least one option."
+            message: "Please select at least one option."
 
     next:
       - when: "data.paye_deducted === 'yes' && !['self_employed_freelance_business', 'multiple_employers_same_time'].includes(data.work_situation) && data.sars_tax_year_status !== 'refund_paid' && (['changed_jobs', 'unemployed_unpaid_reduced_pay'].includes(data.work_situation) || data.paid_own_retirement_annuity === 'yes' || data.paid_own_medical_aid === 'yes')"
@@ -166,11 +185,11 @@ sections:
 
 completion:
   title: "Thanks, {{data.full_name}}"
-  message: "We have received your details. Based on your answers, it does not look like a simple PAYE refund opportunity right now, but we may still review your submission if more information is needed."
+  message: "We have received your details. Based on your answers, this may not be a simple PAYE refund opportunity, but we may still review your submission and contact you if there is a useful next step."
 
 connections:
   - type: email
     to: "hirebarend@gmail.com"
-    subject: "SARS refund check from {{data.full_name}}"
+    subject: "SARS refund potential check from {{data.full_name}}"
     body: "Reply to {{data.email}} or {{data.cellphone_whatsapp}}."
     include_responses: true
